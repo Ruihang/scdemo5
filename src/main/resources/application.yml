@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: peer1
+  application:
+    name: scdemo5
+#server:
+#  port: 8761
+eureka:
+  client:
+    register-with-eureka: true #是否将自己注册到EurekaServer，默认为true
+#    fetch-registry: false #是否从EurekaServer获取注册信息，单节点无需同步其他节点
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka #与EurekaServer交互的地址
+
+---
+spring:
+  profiles: peer1
+server:
+  port: 8761
+eureka:
+  instance:
+    hostname: peer1
+  client:
+    service-url:
+      defaultZone: http://peer2:8762/eureka #与EurekaServer交互的地址
+
+---
+spring:
+  profiles: peer2
+server:
+  port: 8762
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka #与EurekaServer交互的地址
